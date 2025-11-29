@@ -1,0 +1,19 @@
+{
+    "simulation": {
+        "max_nodes": 50,
+        "default_storage_gb": 10,
+        "default_bandwidth_mbps": 100,
+        "default_cpu_cores": 2,
+        "chunk_size_bytes": 1024,
+        "chunks_per_ack": 3,
+        "network_latency_ms": 10
+    },
+    "storage": {
+        "base_path": "storage/virtual_drives",
+        "cleanup_on_exit": true
+    },
+    "network": {
+        "ip_range": "192.168.0.0/16",
+        "max_packet_queue": 1000
+    }
+}

@@ -1,0 +1,185 @@
+syntax = "proto3";
+
+package cloudgrpc;
+
+// Calculator Service
+service Calculator {
+  rpc Add (AddRequest) returns (AddResponse);
+  rpc Sub (SubRequest) returns (SubResponse);
+  rpc Mul (MulRequest) returns (MulResponse);
+  rpc Div (DivRequest) returns (DivResponse);
+  rpc Mod (ModRequest) returns (ModResponse);
+}
+
+// Authentication Service
+service AuthService {
+  rpc SendOtp (SendOtpRequest) returns (SendOtpResponse);
+  rpc VerifyOtp (VerifyOtpRequest) returns (VerifyOtpResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Enroll (EnrollRequest) returns (EnrollResponse);
+  rpc GetStorageInfo (StorageInfoRequest) returns (StorageInfoResponse);
+}
+
+// Admin Service
+service AdminService {
+  rpc GetSystemStatus (SystemStatusRequest) returns (SystemStatusResponse);
+  rpc UpdateGlobalStorage (UpdateStorageRequest) returns (UpdateStorageResponse);
+  rpc StreamSystemEvents (SystemEventsRequest) returns (stream SystemEvent);
+}
+
+// Calculator Messages
+message AddRequest {
+  string session_token = 1;
+  int64 a = 2;
+  int64 b = 3;
+}
+
+message AddResponse {
+  bool success = 1;
+  string message = 2;
+  int64 result = 3;
+}
+
+message SubRequest {
+  string session_token = 1;
+  int64 a = 2;
+  int64 b = 3;
+}
+
+message SubResponse {
+  bool success = 1;
+  string message = 2;
+  int64 result = 3;
+}
+
+message MulRequest {
+  string session_token = 1;
+  int64 a = 2;
+  int64 b = 3;
+}
+
+message MulResponse {
+  bool success = 1;
+  string message = 2;
+  int64 result = 3;
+}
+
+message DivRequest {
+  string session_token = 1;
+  int64 a = 2;
+  int64 b = 3;
+}
+
+message DivResponse {
+  bool success = 1;
+  string message = 2;
+  int64 result = 3;
+}
+
+message ModRequest {
+  string session_token = 1;
+  int64 a = 2;
+  int64 b = 3;
+}
+
+message ModResponse {
+  bool success = 1;
+  string message = 2;
+  int64 result = 3;
+}
+
+// Auth Messages
+message SendOtpRequest {
+  string email = 1;
+}
+
+message SendOtpResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message VerifyOtpRequest {
+  string email = 1;
+  string otp = 2;
+}
+
+message VerifyOtpResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+}
+
+message LoginResponse {
+  bool success = 1;
+  string message = 2;
+  string session_token = 3;
+}
+
+message EnrollRequest {
+  string email = 1;
+  string full_name = 2;
+}
+
+message EnrollResponse {
+  bool success = 1;
+  string message = 2;
+  string session_token = 3;
+}
+
+message StorageInfoRequest {
+  string session_token = 1;
+}
+
+message StorageInfoResponse {
+  bool success = 1;
+  string message = 2;
+  int64 allocated_bytes = 3;
+  int64 used_bytes = 4;
+  int64 available_bytes = 5;
+  double usage_percentage = 6;
+}
+
+// Admin Messages
+message SystemStatusRequest {
+  string admin_key = 1;
+}
+
+message SystemStatusResponse {
+  bool success = 1;
+  string message = 2;
+  int64 global_capacity_bytes = 3;
+  int64 global_allocated_bytes = 4;
+  int64 global_available_bytes = 5;
+  int64 global_used_bytes = 6;
+  int32 total_users = 7;
+  int32 max_users = 8;
+  double allocation_percentage = 9;
+  double usage_percentage = 10;
+}
+
+message UpdateStorageRequest {
+  string admin_key = 1;
+  int64 new_capacity_gb = 2;
+}
+
+message UpdateStorageResponse {
+  bool success = 1;
+  string message = 2;
+  int64 old_capacity_bytes = 3;
+  int64 new_capacity_bytes = 4;
+}
+
+message SystemEventsRequest {
+  string admin_key = 1;
+}
+
+message SystemEvent {
+  string event_type = 1;  // USER_ENROLLED, USER_LOGIN, STORAGE_UPDATED, OPERATION_PERFORMED
+  string timestamp = 2;
+  string message = 3;
+  string user_email = 4;
+  int64 storage_change = 5;
+}
